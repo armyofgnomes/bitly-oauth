@@ -25,4 +25,3 @@ require 'bitly_oauth/url'
 require 'bitly_oauth/user'
 
 require 'bitly_oauth/lib/core_ext/hash'
-require 'bitly_oauth/lib/core_ext/string'

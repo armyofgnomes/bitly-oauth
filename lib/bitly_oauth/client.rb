@@ -86,7 +86,7 @@ module BitlyOAuth
     end
 
     def lookup(input)
-      input = input.to_a
+      input = [*input]
       response = get(:lookup, :url => input)
       results = response['lookup'].inject([]) do |results, url|
         index = input.index(url['long_url'] = url.delete('url'))
@@ -104,8 +104,9 @@ module BitlyOAuth
     private
 
     def get_method(method, input, options={})
+      options = ParamsHash[ options ]
       options.symbolize_keys!
-      input = input.to_a
+      input = [*input]
 
       input.each do |i|
         (options[key_for(i)] ||= []) << i
@@ -130,7 +131,7 @@ module BitlyOAuth
     def get_single_method(method, input)
       raise ArgumentError.new("This method only takes a hash or url input") unless input.is_a? String
 
-      response = get(method, key_for(input) => input.to_a)
+      response = get(method, key_for(input) => [*input])
       BitlyOAuth::Url.new(self, response)
     end
 
